@@ -1,30 +1,21 @@
--- SQL-команды для создания таблиц
+-- Напишите запросы, которые выводят следующую информацию:
+-- 1. "имя контакта" и "город" (contact_name, city) из таблицы customers (только эти две колонки)
+SELECT contact_name, city
+FROM customers;
  
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS employees;
+-- 2. идентификатор заказа и разницу между датами формирования (order_date) заказа и его отгрузкой (shipped_date) из таблицы orders
+SELECT order_id, shipped_date - order_date AS days_diff
+FROM orders;
  
-CREATE TABLE customers (
-    customer_id VARCHAR(5) PRIMARY KEY,
-    company_name VARCHAR(100) NOT NULL,
-    contact_name VARCHAR(100)
-);
+-- 3. все города без повторов, в которых зарегистрированы заказчики (customers)
+SELECT DISTINCT city
+FROM customers;
  
-CREATE TABLE employees (
-    employee_id INTEGER PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    title VARCHAR(100),
-    birth_date DATE,
-    notes TEXT
-);
+-- 4. количество заказов (таблица orders)
+SELECT COUNT(*) AS orders_count
+FROM orders;
  
-CREATE TABLE orders (
-    order_id INTEGER PRIMARY KEY,
-    customer_id VARCHAR(5) REFERENCES customers(customer_id),
-    employee_id INTEGER REFERENCES employees(employee_id),
-    order_date DATE,
-    ship_city VARCHAR(100)
-);
+-- 5. количество стран, в которые отгружался товар (таблица orders, колонка ship_country)
+SELECT COUNT(DISTINCT ship_country) AS countries_count
+FROM orders;
  
--- SQL-команды для создания таблиц
